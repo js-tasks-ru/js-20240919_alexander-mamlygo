@@ -6,7 +6,7 @@
  */
 export function sortStrings(arr, param = 'asc') {
   const locales = ['ru', 'en'];
-  const sortedAsc = arr.toSorted((a, b) => {
+  const sortedAsc = arr.slice().sort((a, b) => {
     return a.localeCompare(b, locales, {
       caseFirst: 'upper',
     });
