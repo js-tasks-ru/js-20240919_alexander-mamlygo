@@ -9,9 +9,9 @@ export function createGetter(path) {
   return function (obj) {
     let result = obj;
 
-    for (let pathElement of pathElements) {
+    for (const pathElement of pathElements) {
       if (typeof result !== 'object' || result === null || !result.hasOwnProperty(pathElement)) {
-        return undefined;
+        return;
       }
       result = result[pathElement];
     }
