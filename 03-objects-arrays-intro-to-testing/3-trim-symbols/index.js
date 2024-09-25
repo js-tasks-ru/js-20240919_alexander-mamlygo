@@ -5,22 +5,23 @@
  * @returns {string} - the new string without extra symbols according passed size
  */
 export function trimSymbols(string, size) {
-  if (typeof string !== 'string') {
-    throw new Error('First argument must be a string');
-  }
   if (!Number.isFinite(size)) { return string; }
 
   let counter = 0;
+  let currentChar = '';
+  let result = '';
 
-  return string.split('').reduce((acc, cur) => {
-    if (acc.at(-1) !== cur) {
+  for (const char of string) {
+    if (currentChar !== char) {
+      currentChar = char;
       counter = 0;
     }
 
     if (counter < size) {
       counter++;
-      return acc + cur;
+      result += char;
     }
-    return acc;
-  }, '');
+  }
+
+  return result;
 }
