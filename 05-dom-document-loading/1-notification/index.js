@@ -35,7 +35,6 @@ export default class NotificationMessage {
 
   destroy() {
     this.element.remove();
-    NotificationMessage.lastShownNotification = null;
     clearTimeout(this.timerId);
   }
 
