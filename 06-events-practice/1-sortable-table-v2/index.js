@@ -1,4 +1,4 @@
-import SortableTable from "../../05-dom-document-loading/2-sortable-table-v1";
+import SortableTable from "../../05-dom-document-loading/2-sortable-table-v1/index.js";
 
 export default class SortableTableV2 extends SortableTable {
   isSortLocally;
