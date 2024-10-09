@@ -1,6 +1,6 @@
-import { SortableTableV1 } from "./sortableTableV1.js";
+import SortableTable from "../../05-dom-document-loading/2-sortable-table-v1";
 
-export default class SortableTableV2 extends SortableTableV1 {
+export default class SortableTableV2 extends SortableTable {
   isSortLocally;
 
   constructor(headersConfig, {
@@ -17,7 +17,7 @@ export default class SortableTableV2 extends SortableTableV1 {
   }
 
   handleTablePointerdown = (e) => {
-    let cell = e.target.closest('.sortable-table__cell');
+    const cell = e.target.closest('.sortable-table__cell');
 
     if (!cell) {
       return;
