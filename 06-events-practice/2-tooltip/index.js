@@ -66,7 +66,7 @@ class Tooltip {
       return;
     }
 
-    let relatedTarget = e.relatedTarget;
+    const relatedTarget = e.relatedTarget;
 
     if (
       relatedTarget
