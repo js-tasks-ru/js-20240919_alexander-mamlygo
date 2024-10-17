@@ -1,4 +1,4 @@
-import ColumnChart from './index.js';
+import ColumnChartV2 from './index.js';
 
 import ordersData from "./__mocks__/orders-data.js";
 
@@ -8,7 +8,7 @@ describe('async-code-fetch-api-part-1/column-chart', () => {
   beforeEach(() => {
     fetchMock.mockResponse(JSON.stringify(ordersData));
 
-    columnChart = new ColumnChart({
+    columnChart = new ColumnChartV2({
       label: '',
       link: '',
       value: 0
@@ -49,7 +49,7 @@ describe('async-code-fetch-api-part-1/column-chart', () => {
   it('should have ability to define "label"', () => {
     const label = 'New label';
 
-    columnChart = new ColumnChart({ label });
+    columnChart = new ColumnChartV2({ label });
 
     const title = columnChart.element.querySelector('.column-chart__title');
 
@@ -59,7 +59,7 @@ describe('async-code-fetch-api-part-1/column-chart', () => {
   it('should have ability to define "link"', () => {
     const link = 'https://google.com';
 
-    columnChart = new ColumnChart({ link });
+    columnChart = new ColumnChartV2({ link });
 
     document.body.append(columnChart.element);
 
@@ -69,7 +69,7 @@ describe('async-code-fetch-api-part-1/column-chart', () => {
   });
 
   it('should have property "chartHeight"', () => {
-    columnChart = new ColumnChart();
+    columnChart = new ColumnChartV2();
 
     expect(columnChart.chartHeight).toEqual(50);
   });
@@ -91,7 +91,7 @@ describe('async-code-fetch-api-part-1/column-chart', () => {
   });
 
   it('should have loading indication if data wasn\'t passed ', () => {
-    columnChart = new ColumnChart();
+    columnChart = new ColumnChartV2();
     document.body.append(columnChart);
 
     expect(columnChart.element).toHaveClass('column-chart_loading');
