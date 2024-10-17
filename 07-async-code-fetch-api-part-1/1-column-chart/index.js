@@ -3,14 +3,6 @@ import ColumnChart from "../../04-oop-basic-intro-to-dom/1-column-chart/index.js
 const BACKEND_URL = 'https://course-js.javascript.ru';
 
 export default class ColumnChartV2 extends ColumnChart {
-  get subElements() {
-    const elements = {};
-    this.element.querySelectorAll('[data-element]').forEach(element => {
-      elements[element.dataset.element] = element;
-    });
-    return elements;
-  }
-
   constructor(props = {}) {
     super(props);
     const { url, range } = props;
@@ -26,7 +18,7 @@ export default class ColumnChartV2 extends ColumnChart {
     const paramsObj = {from: from, to: to};
     const searchParams = new URLSearchParams(paramsObj);
 
-    let response = await fetch(`${BACKEND_URL}/${this.url}/?${searchParams.toString()}`);
+    const response = await fetch(`${BACKEND_URL}/${this.url}/?${searchParams.toString()}`);
     const data = await response.json();
     this.data = Object.values(data);
     if (this.data.length > 0) {

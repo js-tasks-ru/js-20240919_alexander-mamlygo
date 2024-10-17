@@ -2,6 +2,14 @@ export default class ColumnChart {
   element;
   chartHeight = 50;
 
+  get subElements() {
+    const elements = {};
+    this.element.querySelectorAll('[data-element]').forEach(element => {
+      elements[element.dataset.element] = element;
+    });
+    return elements;
+  }
+
   constructor(props = {}) {
     const {
       data = [],

@@ -1,15 +1,9 @@
 export default class DoubleSlider {
   element;
+  rangeSliderInnerElement;
+  rangeSliderProgressElement;
 
   handlePointermove;
-
-  get rangeSliderProgressElement() {
-    return this.element.querySelector('.range-slider__progress');
-  }
-
-  get rangeSliderInnerElement() {
-    return this.element.querySelector('.range-slider__inner');
-  }
 
   constructor({
     min,
@@ -31,6 +25,9 @@ export default class DoubleSlider {
     }
 
     this.element = this.createElement();
+    this.rangeSliderInnerElement = this.element.querySelector('.range-slider__inner');
+    this.rangeSliderProgressElement = this.element.querySelector('.range-slider__progress');
+
     this.getSliderThumbElement('left').addEventListener('pointerdown', this.handlePointerdown);
     this.getSliderThumbElement('right').addEventListener('pointerdown', this.handlePointerdown);
   }
