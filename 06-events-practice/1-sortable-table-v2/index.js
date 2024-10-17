@@ -13,10 +13,11 @@ export default class SortableTableV2 extends SortableTable {
     this.isSortLocally = isSortLocally;
     this.sort(sorted.id, sorted.order);
 
+    this.handleTablePointerdown = this.handleTablePointerdown.bind(this);
     this.createListeners();
   }
 
-  handleTablePointerdown = (e) => {
+  handleTablePointerdown(e) {
     const cell = e.target.closest('.sortable-table__cell');
 
     if (!cell) {
