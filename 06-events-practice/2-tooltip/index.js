@@ -27,18 +27,15 @@ class Tooltip {
     this.remove();
     document.removeEventListener('pointerover', this.handleTooltipPointerover);
     document.removeEventListener('pointerout', this.handleTooltipPointerout);
-    Tooltip.instance = null;
   }
 
   render(tipText) {
-    document.addEventListener('mousemove', this.handleMouseMove);
     document.body.append(this.element);
     this.element.textContent = tipText;
   }
 
   remove() {
     this.element.remove();
-    document.removeEventListener('mousemove', this.handleMouseMove);
   }
 
   initialize () {
@@ -59,6 +56,7 @@ class Tooltip {
 
     this.currentTooltipElement = target;
     this.render(target.dataset.tooltip);
+    document.addEventListener('mousemove', this.handleMouseMove);
   }
 
   handleTooltipPointerout = (e) => {
@@ -78,6 +76,7 @@ class Tooltip {
 
     this.currentTooltipElement = null;
     this.remove();
+    document.removeEventListener('mousemove', this.handleMouseMove);
   }
 
   handleMouseMove = (e) => {
