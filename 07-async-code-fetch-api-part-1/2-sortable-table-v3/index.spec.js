@@ -1,4 +1,4 @@
-import SortableTable from './index.js';
+import SortableTableV3 from './index.js';
 
 import { products, bestsellers } from './__mocks__/products-data.js';
 
@@ -52,7 +52,7 @@ describe('async-code-fetch-api-part-1/sortable-table-v3', () => {
   beforeEach(() => {
     fetchMock.resetMocks();
 
-    sortableTable = new SortableTable(headerConfig, {
+    sortableTable = new SortableTableV3(headerConfig, {
       url: 'api/rest/products',
       sorted: {
         id: headerConfig.find(item => item.sortable).id,
@@ -98,7 +98,7 @@ describe('async-code-fetch-api-part-1/sortable-table-v3', () => {
   });
 
   it('should call "sortOnClient" for sorting on the client side', async () => {
-    const sortableTable = new SortableTable(headerConfig, {
+    const sortableTable = new SortableTableV3(headerConfig, {
       url: 'api/dashboard/bestsellers',
       isSortLocally: true,
       sorted: {
