@@ -1,4 +1,5 @@
 import SortableTableV2 from "../../06-events-practice/1-sortable-table-v2/index.js";
+import {debounce} from "./utils/debounce.js";
 
 const BACKEND_URL = 'https://course-js.javascript.ru';
 
@@ -27,6 +28,11 @@ export default class SortableTableV3 extends SortableTableV2 {
 
     this.addScrollEventListener();
     this.render();
+  }
+
+  destroy() {
+    super.destroy();
+    window.removeEventListener('scroll', this.handleScroll);
   }
 
   async render() {
@@ -68,10 +74,6 @@ export default class SortableTableV3 extends SortableTableV2 {
   }
 
   sort(sortField, sortOrder) {
-    if (this.data.length === 0) {
-      return;
-    }
-
     if (this.isSortLocally) {
       this.sortOnClient(sortField, sortOrder);
     } else {
@@ -83,7 +85,7 @@ export default class SortableTableV3 extends SortableTableV2 {
     super.sort(id, order);
   }
 
-  sortOnServer (id, order) {
+  sortOnServer = (id, order) => {
     if (this.checkSortability(id)) {
       this.sortData = {
         sortField: id,
@@ -95,7 +97,7 @@ export default class SortableTableV3 extends SortableTableV2 {
   }
 
   addScrollEventListener() {
-    window.addEventListener('scroll', this.debounce(this.handleScroll, 300));
+    window.addEventListener('scroll', debounce(this.handleScroll, 300));
   }
 
   handleScroll = async () => {
@@ -113,13 +115,5 @@ export default class SortableTableV3 extends SortableTableV2 {
   checkSortability = (id) => {
     const configItem = this.headerConfig.find((configItem) => configItem.id === id);
     return configItem && configItem.sortable;
-  }
-
-  debounce(func, delay) {
-    let timeout;
-    return function(...args) {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func.apply(this, args), delay);
-    };
   }
 }

@@ -1,4 +1,5 @@
 import fetchJson from './utils/fetch-json.js';
+import escapeHtml from "./utils/escape-html.js";
 
 const IMGUR_CLIENT_ID = '28aaa2e823b03b1';
 const BACKEND_URL = 'https://course-js.javascript.ru';
@@ -77,7 +78,7 @@ export default class ProductForm {
 
     subcategoryElement.innerHTML = categories.map((category) => {
       return category.subcategories.map(subcategory => {
-        return `<option value="${subcategory.id}">${category.title} &gt; ${subcategory.title}</option>`;
+        return `<option value="${escapeHtml(subcategory.id)}">${escapeHtml(category.title)} &gt; ${escapeHtml(subcategory.title)}</option>`;
       }).join('');
     }).join('');
   }
@@ -214,12 +215,12 @@ export default class ProductForm {
   createImageTemplate(imageData) {
     return `
       <li class="products-edit__imagelist-item sortable-list__item" style="">
-        <input type="hidden" name="url" value="${imageData.url}">
-        <input type="hidden" name="source" value="${imageData.source}">
+        <input type="hidden" name="url" value="${escapeHtml(imageData.url)}">
+        <input type="hidden" name="source" value="${escapeHtml(imageData.source)}">
         <span>
           <img src="icon-grab.svg" data-grab-handle="" alt="grab">
-          <img class="sortable-table__cell-img" alt="Image" src="${imageData.url}">
-          <span>${imageData.source}</span>
+          <img class="sortable-table__cell-img" alt="Image" src="${escapeHtml(imageData.url)}">
+          <span>${escapeHtml(imageData.source)}</span>
         </span>
         <button type="button">
           <img src="icon-trash.svg" data-delete-handle="" alt="delete">
