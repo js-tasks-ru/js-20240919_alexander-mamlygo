@@ -66,27 +66,31 @@ export default class SortableTable {
             <div data-element="body" class="sortable-table__body">
                 ${this.createBodyTemplate()}
             </div>
+            ${this.createEmptyTableTemplate()}
+            ${this.createLoadingLineTemplate()}
         </div>
       </div>
       `;
   }
 
-  createBodyTemplate() {
-    if (this.data.length === 0) {
-      return this.createEmptyTableTemplate();
-    }
+  createLoadingLineTemplate() {
+    return `
+        <div data-element="loading" class="loading-line sortable-table__loading-line"></div>
+    `;
+  }
 
+  createBodyTemplate() {
     return this.data.map((item) => this.createTableRowTemplate(item)).join('');
   }
 
   createEmptyTableTemplate() {
     return `
-      <div data-element="emptyPlaceholder" class="sortable-table__empty-placeholder">
-      <div>
-        <p>No products satisfy your filter criteria</p>
-        <button type="button" class="button-primary-outline">Reset all filters</button>
-      </div>
-    </div>
+        <div data-element="emptyPlaceholder" class="sortable-table__empty-placeholder">
+          <div>
+            <p>No products satisfy your filter criteria</p>
+            <button type="button" class="button-primary-outline">Reset all filters</button>
+          </div>
+        </div>
     `;
   }
 
