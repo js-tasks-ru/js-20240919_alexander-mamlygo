@@ -31,10 +31,12 @@ export default class RangePicker {
   destroy() {
     document.removeEventListener('click', this.handleDocumentClick);
     this.inputElement.removeEventListener('click', this.handleInputClick);
-
-    this.leftArrowElement.removeEventListener('click', this.handleArrowClick);
-    this.rightArrowElement.removeEventListener('click', this.handleArrowClick);
     this.selectorElement.removeEventListener('click', this.handleSelectorClick);
+
+    if (this.leftArrowElement && this.rightArrowElement) {
+      this.leftArrowElement.removeEventListener('click', this.handleArrowClick);
+      this.rightArrowElement.removeEventListener('click', this.handleArrowClick);
+    }
 
     this.remove();
   }
