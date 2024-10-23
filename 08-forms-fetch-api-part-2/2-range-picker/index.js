@@ -1,5 +1,9 @@
 export default class RangePicker {
   element;
+  inputElement;
+  selectorElement;
+  leftArrowElement;
+  rightArrowElement;
 
   from;
   to;
@@ -25,6 +29,13 @@ export default class RangePicker {
   }
 
   destroy() {
+    document.removeEventListener('click', this.handleDocumentClick);
+    this.inputElement.removeEventListener('click', this.handleInputClick);
+
+    this.leftArrowElement.removeEventListener('click', this.handleArrowClick);
+    this.rightArrowElement.removeEventListener('click', this.handleArrowClick);
+    this.selectorElement.removeEventListener('click', this.handleSelectorClick);
+
     this.remove();
   }
 
@@ -46,11 +57,8 @@ export default class RangePicker {
   }
 
   addSelectorEventListeners() {
-    const leftArrow = this.element.querySelector('.rangepicker__selector-control-left');
-    const rightArrow = this.element.querySelector('.rangepicker__selector-control-right');
-
-    leftArrow.addEventListener('click', this.handleArrowClick);
-    rightArrow.addEventListener('click', this.handleArrowClick);
+    this.leftArrowElement.addEventListener('click', this.handleArrowClick);
+    this.rightArrowElement.addEventListener('click', this.handleArrowClick);
 
     this.selectorElement.addEventListener('click', this.handleSelectorClick);
   }
@@ -58,6 +66,9 @@ export default class RangePicker {
   handleInputClick = () => {
     if (this.selectorElement.children.length === 0) {
       this.selectorElement.innerHTML = this.createSelectorTemplate(this.visiblePeriodStart);
+      this.leftArrowElement = this.element.querySelector('.rangepicker__selector-control-left');
+      this.rightArrowElement = this.element.querySelector('.rangepicker__selector-control-right');
+
       this.addSelectorEventListeners();
     }
 
