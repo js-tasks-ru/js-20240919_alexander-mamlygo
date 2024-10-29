@@ -1,4 +1,4 @@
-import ProductForm from './index.js';
+import ProductFormV2 from './index.js';
 
 import productData from './__mocks__/product-data.js';
 import categoriesData from './__mocks__/categories-data.js';
@@ -13,7 +13,7 @@ describe('tests-for-frontend-apps/product-form-v2', () => {
 
     const productId = 'some-id';
 
-    productFormComponent = new ProductForm(productId);
+    productFormComponent = new ProductFormV2(productId);
 
     const element = await productFormComponent.render();
 

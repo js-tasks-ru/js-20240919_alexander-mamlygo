@@ -72,7 +72,7 @@ export default class SortableList {
       element.removeEventListener('pointerdown', this.handleDeletePointerdown);
     });
 
-    document.removeEventListener('mousemove', this.handleMouseMove);
+    document.removeEventListener('mousemove', this.handlePointerMove);
 
     if (this.dragState.listItem) {
       this.dragState.listItem.removeEventListener('pointerup', this.handlePointerup);
@@ -80,6 +80,7 @@ export default class SortableList {
   }
 
   handleGrabPointerdown = (e) => {
+    e.preventDefault();
     const listItem = e.target.closest('.sortable-list__item');
     if (!listItem) {
       return;
@@ -93,8 +94,8 @@ export default class SortableList {
     listItem.style.width = `${itemWidth}px`;
     listItem.style.height = `${itemHeight}px`;
 
-    this.dragState.shiftX = e.clientX - listItem.getBoundingClientRect().left;
-    this.dragState.shiftY = e.clientY - listItem.getBoundingClientRect().top;
+    this.dragState.shiftX = e.pageX - (listItem.getBoundingClientRect().left + window.scrollX);
+    this.dragState.shiftY = e.pageY - (listItem.getBoundingClientRect().top - window.scrollY);
 
     this.moveAt(e.pageX, e.pageY);
 
@@ -108,12 +109,12 @@ export default class SortableList {
       listItem.parentNode.insertBefore(placeholderElem, listItem);
     }
 
-    document.addEventListener('mousemove', this.handleMouseMove);
+    document.addEventListener('pointermove', this.handlePointerMove);
     listItem.addEventListener('pointerup', this.handlePointerup);
   }
 
   handlePointerup = () => {
-    document.removeEventListener('mousemove', this.handleMouseMove);
+    document.removeEventListener('pointermove', this.handlePointerMove);
     this.dragState.listItem.removeEventListener('pointerup', this.handlePointerup);
     this.dragState.listItem.classList.remove('sortable-list__item_dragging');
     this.dragState.listItem.style.cssText = '';
@@ -128,7 +129,7 @@ export default class SortableList {
      this.dragState.listItem.style.top = pageY - this.dragState.shiftY + 'px';
    }
 
-  handleMouseMove = (event)=> {
+  handlePointerMove = (event)=> {
     this.moveAt(event.pageX, event.pageY);
 
     // does not work by setting hidden = true as described here https://learn.javascript.ru/mouse-drag-and-drop
@@ -158,6 +159,7 @@ export default class SortableList {
     }
     listItem.remove();
     listItem.removeEventListener('pointerdown', this.handleDeletePointerdown);
+    this.element.dispatchEvent(new CustomEvent('delete-list-item', { detail: listItem, bubbles: true }));
   }
 
   createPlaceholderElement(width, height) {
