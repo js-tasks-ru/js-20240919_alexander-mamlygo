@@ -22,11 +22,9 @@ export default class ColumnChart {
     this.label = label;
     this.link = link;
     this.formatHeading = formatHeading;
-
-    this.render();
   }
 
-  render() {
+  async render() {
     const { from, to } = this.range;
     const element = document.createElement('div');
 
@@ -35,7 +33,7 @@ export default class ColumnChart {
     this.element = element.firstElementChild;
     this.subElements = this.getSubElements(this.element);
 
-    this.loadData(from, to);
+    await this.loadData(from, to);
   }
 
   getHeaderValue(data) {
@@ -91,7 +89,7 @@ export default class ColumnChart {
     return `
       <div class="column-chart column-chart_loading" style="--chart-height: ${this.chartHeight}">
         <div class="column-chart__title">
-          Total ${this.label}
+          ${this.label}
           ${this.getLink()}
         </div>
         <div class="column-chart__container">
