@@ -72,7 +72,6 @@ export default class SortableTable {
     start = 1,
     end = start + step
   } = {}) {
-
     this.headersConfig = headersConfig;
     this.url = new URL(url, BACKEND_URL);
     this.sorted = sorted;
@@ -80,6 +79,8 @@ export default class SortableTable {
     this.step = step;
     this.start = start;
     this.end = end;
+
+    this.render();
   }
 
   async render() {

@@ -22,9 +22,11 @@ export default class ColumnChart {
     this.label = label;
     this.link = link;
     this.formatHeading = formatHeading;
+
+    this.render();
   }
 
-  async render() {
+  render() {
     const { from, to } = this.range;
     const element = document.createElement('div');
 
@@ -33,7 +35,7 @@ export default class ColumnChart {
     this.element = element.firstElementChild;
     this.subElements = this.getSubElements(this.element);
 
-    await this.loadData(from, to);
+    this.loadData(from, to);
   }
 
   getHeaderValue(data) {
