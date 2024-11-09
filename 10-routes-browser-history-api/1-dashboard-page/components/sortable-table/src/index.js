@@ -10,6 +10,8 @@ export default class SortableTable {
   step = 20;
   start = 1;
   end = this.start + this.step;
+  from;
+  to;
 
   onWindowScroll = async() => {
     const { bottom } = this.element.getBoundingClientRect();
@@ -70,7 +72,6 @@ export default class SortableTable {
     start = 1,
     end = start + step
   } = {}) {
-
     this.headersConfig = headersConfig;
     this.url = new URL(url, BACKEND_URL);
     this.sorted = sorted;
@@ -99,11 +100,16 @@ export default class SortableTable {
     this.initEventListeners();
   }
 
-  async loadData(id, order, start = this.start, end = this.end) {
+  async loadData(id, order, start = this.start, end = this.end, from = this.from, to = this.to) {
     this.url.searchParams.set('_sort', id);
     this.url.searchParams.set('_order', order);
     this.url.searchParams.set('_start', start);
     this.url.searchParams.set('_end', end);
+
+    if (from && to) {
+      this.url.searchParams.set('from', from);
+      this.url.searchParams.set('to', to);
+    }
 
     this.element.classList.add('sortable-table_loading');
 
@@ -112,6 +118,22 @@ export default class SortableTable {
     this.element.classList.remove('sortable-table_loading');
 
     return data;
+  }
+
+  async updatePeriod(from, to) {
+    this.from = from;
+    this.to = to;
+
+    const { id, order } = this.sorted;
+
+    this.data = await this.loadData(id, order, this.start, this.end, this.from, this.to);
+
+    if (this.data.length) {
+      this.subElements.body.innerHTML = this.getTableRows(this.data);
+      this.element.classList.remove('sortable-table_empty');
+    } else {
+      this.element.classList.add('sortable-table_empty');
+    }
   }
 
   addRows(data) {
